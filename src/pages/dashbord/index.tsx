@@ -8,8 +8,10 @@ import { toast } from "react-toastify";
 import { queryClient } from "../_app";
 import { useSearch, useshowmadal } from "../../store";
 import { useUpdate } from "@/Hooks/Editdata";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Dashbord = () => {
+  const QueryClient = useQueryClient();
   const Reset = () => setshowmadal(false);
   const { setshowmadal, showmadal } = useshowmadal();
 
@@ -42,17 +44,17 @@ const Dashbord = () => {
     if (Getdata) {
       return update.mutate(data, {
         onSuccess: () => (
-          toast.success("Products Update"),
+          toast.success("Products Editet"),
           setshowmadal(false),
-          queryClient.invalidateQueries(["tablegetdata"])
+          QueryClient.invalidateQueries(["tablegetdata"])
         ),
         onError: () => toast.error("Product no Update"),
       });
     } else {
       return postData.mutate(data, {
         onSuccess: (e) => (
-          toast.success("Products Editet"),
-          queryClient.invalidateQueries(["tablegetdata"])
+          toast.success("Products Update"),
+          QueryClient.invalidateQueries(["tablegetdata"])
         ),
         onError: (e) => toast.error("Product no Editet"),
       });

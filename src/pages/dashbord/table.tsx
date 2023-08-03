@@ -7,9 +7,10 @@ import Head from "next/head";
 import { useSearch, useshowmadal } from "@/store";
 import { useDelete } from "@/Hooks/Deletedata";
 import { toast } from "react-toastify";
-import { queryClient } from "../_app";
+import { useQueryClient } from "@tanstack/react-query";
 
 const TableComponents = () => {
+  const QueryClient = useQueryClient();
   const Getdata = useGetData({ keys: ["tablegetdata"], url: "/products" });
   const myTable: datapropsdetel[] = [];
   const { setNumber, number } = useSearch();
@@ -22,9 +23,9 @@ const TableComponents = () => {
       {},
       {
         onSuccess: (e) => (
-          toast.success(`Category Deltete`),
+          toast.success(`Products Deltete`),
           console.log(e),
-          queryClient.invalidateQueries(["tablegetdata"])
+          QueryClient.invalidateQueries(["tablegetdata"])
         ),
         onError: () => toast.error("Category No Deleted"),
       }
