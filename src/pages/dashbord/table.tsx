@@ -3,14 +3,35 @@ import { Button, Table } from "antd";
 import { columns } from "@/constants";
 import { useGetData } from "@/Hooks/Getdata";
 import { datapropsdetel } from "@/Interface";
-import Image from "next/image";
 import Head from "next/head";
+import { useSearch, useshowmadal } from "@/store";
+import { useDelete } from "@/Hooks/Deletedata";
+import { toast } from "react-toastify";
+import { queryClient } from "../_app";
 
 const TableComponents = () => {
   const Getdata = useGetData({ keys: ["tablegetdata"], url: "/products" });
   const myTable: datapropsdetel[] = [];
+  const { setNumber, number } = useSearch();
+  const { setshowmadal } = useshowmadal();
 
-  Getdata?.data?.data.map((element: any, index: number) =>
+  const dataDelete = useDelete(`products/${number}`);
+
+  const DeleteData = () => {
+    dataDelete.mutate(
+      {},
+      {
+        onSuccess: (e) => (
+          toast.success(`Category Deltete`),
+          console.log(e),
+          queryClient.invalidateQueries(["tablegetdata"])
+        ),
+        onError: () => toast.error("Category No Deleted"),
+      }
+    );
+  };
+
+  Getdata?.data?.data?.map((element: any, index: number) =>
     myTable.push({
       ...element,
       key: index,
@@ -38,10 +59,16 @@ const TableComponents = () => {
       images: <img src={element.image} height={50} width={50}></img>,
       options: (
         <div className="flex gap-8 justify-center">
-          <Button style={{ backgroundColor: "red", color: "white" }}>
+          <Button
+            onClick={() => DeleteData()}
+            style={{ backgroundColor: "red", color: "white" }}
+          >
             <i className="fa-solid fa-trash"></i>
           </Button>
-          <Button style={{ backgroundColor: "orange", color: "white" }}>
+          <Button
+            onClick={() => (setNumber(index), setshowmadal(true))}
+            style={{ backgroundColor: "orange", color: "white" }}
+          >
             <i className="fa-solid fa-pen"></i>
           </Button>
         </div>

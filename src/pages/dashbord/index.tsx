@@ -4,42 +4,66 @@ import { Button, Modal, Input, Form } from "antd";
 import { usePostData } from "@/Hooks/Postdata";
 import { useGetData } from "@/Hooks/Getdata";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { IFormInput } from "@/Interface";
 import { toast } from "react-toastify";
 import { queryClient } from "../_app";
+import { useSearch, useshowmadal } from "../../store";
+import { useUpdate } from "@/Hooks/Editdata";
 
 const Dashbord = () => {
-  const [showmadal, setShowmadal] = useState(false);
-  const Reset = () => setShowmadal(false);
-  const Getdata = useGetData({ keys: ["tablegetdata"], url: "/products" });
-  const postData = usePostData("/products");
+  const Reset = () => setshowmadal(false);
+  const { setshowmadal, showmadal } = useshowmadal();
 
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      name: "",
-      price: "",
-      image: "",
-      category: "",
+  const { number, setNumber } = useSearch();
+
+  const Getdata = useGetData({
+    keys: [`single`, `${number}`],
+    url: `/products/${Number(number + 1)}`,
+    options: {
+      enabled: !!number,
     },
   });
 
-  useEffect(() => {}, [Getdata]);
+  const data = Getdata?.data?.product;
+
+  // update edit data === Post data
+  const update = useUpdate(`products/${number}`);
+  const postData = usePostData(`/products/${number}`);
+
+  const { control, handleSubmit, setValue } = useForm();
+
+  useEffect(() => {
+    setValue("name", data?.name);
+    setValue("price", data?.price);
+    setValue("image", data?.image);
+    setValue("category", data?.category);
+  }, [number, Getdata]);
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    postData.mutate(data, {
-      onSuccess: (e) => (
-        toast.success("Products Editet"),
-        queryClient.invalidateQueries(["tablegetdata"])
-      ),
-      onError: (e) => toast.error("Product no Editet"),
-    });
+    if (Getdata) {
+      return update.mutate(data, {
+        onSuccess: () => (
+          toast.success("Products Update"),
+          setshowmadal(false),
+          queryClient.invalidateQueries(["tablegetdata"])
+        ),
+        onError: () => toast.error("Product no Update"),
+      });
+    } else {
+      return postData.mutate(data, {
+        onSuccess: (e) => (
+          toast.success("Products Editet"),
+          queryClient.invalidateQueries(["tablegetdata"])
+        ),
+        onError: (e) => toast.error("Product no Editet"),
+      });
+    }
   };
 
   return (
     <div className="mt-[30px]">
       <div className="flex justify-center container">
         <Button
-          onClick={() => setShowmadal(true)}
+          onClick={() => (setshowmadal(true), setNumber(0))}
           style={{ backgroundColor: "orange", color: "white", border: "none" }}
           size="large"
           block
@@ -91,6 +115,7 @@ const Dashbord = () => {
             }}
             htmlType="submit"
             block
+            onClick={() => setshowmadal(false)}
           >
             Send
           </Button>

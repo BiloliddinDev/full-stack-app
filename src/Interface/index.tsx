@@ -38,3 +38,8 @@ export interface IFormInput {
   image?: string;
   category?: string;
 }
+
+export interface zuztandtype {
+  numberty: number;
+  setNumber: (value: number) => void;
+}
