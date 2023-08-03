@@ -29,3 +29,12 @@ export interface gettypeprops {
   url: string;
   options?: any;
 }
+
+// Form data type interface
+
+export interface IFormInput {
+  name?: string;
+  price?: number;
+  image?: string;
+  category?: string;
+}
