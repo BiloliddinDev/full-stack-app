@@ -14,8 +14,9 @@ const Dashbord = () => {
   const QueryClient = useQueryClient();
   const Reset = () => setshowmadal(false);
   const { setshowmadal, showmadal } = useshowmadal();
-
   const { number, setNumber } = useSearch();
+
+  console.log(number + 1, "bu products ID");
 
   const Getdata = useGetData({
     keys: [`single`, `${number}`],
@@ -29,7 +30,7 @@ const Dashbord = () => {
 
   // update edit data === Post data
   const update = useUpdate(`products/${number}`);
-  const postData = usePostData(`/products/${number}`);
+  const postData = usePostData(`products`);
 
   const { control, handleSubmit, setValue } = useForm();
 
@@ -41,6 +42,7 @@ const Dashbord = () => {
   }, [number, Getdata]);
 
   const onSubmit: SubmitHandler<any> = (data) => {
+    console.log(data, "Bu submit data");
     if (Getdata) {
       return update.mutate(data, {
         onSuccess: () => (

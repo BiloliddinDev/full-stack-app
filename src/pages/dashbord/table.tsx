@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Table } from "antd";
 import { columns } from "@/constants";
 import { useGetData } from "@/Hooks/Getdata";
@@ -8,28 +8,27 @@ import { useSearch, useshowmadal } from "@/store";
 import { useDelete } from "@/Hooks/Deletedata";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
+import { instance } from "@/Utils";
 
 const TableComponents = () => {
   const QueryClient = useQueryClient();
+  const [dataId, setDataId] = useState<number>(0);
   const Getdata = useGetData({ keys: ["tablegetdata"], url: "/products" });
   const myTable: datapropsdetel[] = [];
   const { setNumber, number } = useSearch();
   const { setshowmadal } = useshowmadal();
 
-  const dataDelete = useDelete(`products/${number}`);
-
   const DeleteData = () => {
-    dataDelete.mutate(
-      {},
-      {
-        onSuccess: (e) => (
+    instance
+      .delete(`products/${dataId}`)
+      .then(
+        (res) => (
           toast.success(`Products Deltete`),
-          console.log(e),
+          console.log(res),
           QueryClient.invalidateQueries(["tablegetdata"])
-        ),
-        onError: () => toast.error("Category No Deleted"),
-      }
-    );
+        )
+      )
+      .catch((err) => (toast.error("Category No Deleted"), console.log(err)));
   };
 
   Getdata?.data?.data?.map((element: any, index: number) =>
@@ -61,7 +60,7 @@ const TableComponents = () => {
       options: (
         <div className="flex gap-8 justify-center">
           <Button
-            onClick={() => DeleteData()}
+            onClick={() => (setDataId(element?.id), DeleteData())}
             style={{ backgroundColor: "red", color: "white" }}
           >
             <i className="fa-solid fa-trash"></i>
@@ -96,7 +95,6 @@ const TableComponents = () => {
           bordered
           columns={columns}
           dataSource={myTable}
-          //   rowKey={Number(columns.id)}
           expandable={{
             expandedRowRender: (record) => record.description,
             rowExpandable: (record) => record.name !== "Not Expandable",

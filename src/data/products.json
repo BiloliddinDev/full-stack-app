@@ -2,58 +2,58 @@
   "products": [
     {
       "id": "1",
-      "name": "Iphone 14 pro max",
-      "price": 1200,
-      "image": "https://openshop.uz/public/storage/uploads/products/photos/202210/rGRXRrRmJbA3jf6VJBiVYNmJBKuDf38ItbJx17fG.jpg",
-      "category": "iphone"
-    },
-    {
-      "id": "2",
       "name": "Xiaomi Redmi 10",
       "price": 300,
       "image": "https://openshop.uz/uploads/products/thumbnail/202204/sJuOdVaVgqBFDiUfAvM3WKO32zsBdC1TYeWq8gfz.jpg",
       "category": "redmi"
     },
     {
-      "id": "3",
+      "id": "2",
       "name": "Samsung A54",
       "price": 550,
       "image": "https://kattabozor.s3.eu-central-1.amazonaws.com/ri/f83d1e4868e622ce7c1e656e0883f0ee2f4365e1e3a096272a456a63a80288a9_9Tbm6z_320l.jpg",
       "category": "samsung"
     },
     {
-      "id": "4",
+      "id": "3",
       "name": "Vivo",
       "price": 450,
       "image": "https://hotline.ua/img/tx/396/396284631_s265.jpg",
       "category": "vivo"
     },
     {
-      "id": "5",
+      "id": "4",
       "name": "Nokia",
       "price": 150,
       "image": "https://openshop.uz/public/storage/uploads/products/thumbnail/202204/rM0qolCfXsTD12yUWzZVA7TVuyaydYCA3MwQIk44.jpg",
       "category": "nokia"
     },
     {
-      "id": "6",
+      "id": "5",
       "name": "Samsung A23",
       "price": 350,
       "image": "https://satynal.com.tm/19338-large_default/samsung-galaxy-a23-464-gb-smartfon.jpg",
       "category": "samsung"
     },
     {
-      "id": "7",
+      "id": "6",
       "name": "Samsung S23",
       "price": 1150,
       "image": "https://object.pscloud.io/cms/cms/Photo/img_0_77_3416_7_1.jpg",
       "category": "samsung"
     },
     {
-      "id": "8",
+      "id": "7",
       "name": "Iphone 14 ",
       "price": 800,
       "image": "https://www.mechta.kz/images/product/71887/14midnight128(1).jpg",
+      "category": "iphone"
+    },
+    {
+      "id": "8",
+      "name": "Iphone 14 pro max",
+      "price": 1200,
+      "image": "https://openshop.uz/public/storage/uploads/products/photos/202210/rGRXRrRmJbA3jf6VJBiVYNmJBKuDf38ItbJx17fG.jpg",
       "category": "iphone"
     }
   ]

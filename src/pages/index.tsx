@@ -15,11 +15,11 @@ export default function Home() {
         <div className="flex flex-col justify-center gap-[50px] mt-[150px] px-[500px] text-center">
           <Link href={"/dashbord"}>
             <div className="bg-slate-300  py-[50px] rounded-xl text-[30px] hover:bg-slate-200 cursor-pointer">
-              Dashbord
+              Dashboard
             </div>
           </Link>
           <div className="bg-slate-300 py-[50px] rounded-xl text-[30px] hover:bg-slate-200 cursor-pointer">
-            Ecomer Shop market
+            Ecommer Shop market
           </div>
         </div>
       </div>
